@@ -7,6 +7,9 @@ from main_page import main_page
 
 # Image.MAX_IMAGE_PIXELS = None
 
+
+
+
 page_style = """
         <style>
         #MainMenu {visibility: hidden;}  
@@ -34,27 +37,26 @@ def set_page_container_style(prcnt_width: int = 75):
 
 
 set_page_container_style(75)
-def home_page():
-    with st.sidebar:
-        choose = option_menu("Testing set", [ "Setting 0", "Setting 1"],
-                            icons=['clipboard-data',
-                                    'lightning-charge'],
-                            menu_icon="app-indicator", default_index=0,
-                            styles={
-            "container": {"padding": "5!important", "background-color": "#fafafa"},
-            "icon": {"color": "orange", "font-size": "25px"},
-            "nav-link": {"font-size": "16px", "text-align": "left", "margin": "0px", "--hover-color": "#eee"},
-            "nav-link-selected": {"background-color": "#02ab21"},
-        }
-        )
-    
-    if choose == "Setting 0":
-        a=1
-        main_page(0)
-
-    elif choose == "Setting 1":
-        a=1
-        main_page(1)
 
 
-home_page()
+with st.sidebar:
+    choose = option_menu("Testing set", ["Setting 0", "Setting 1"],
+                         icons=['clipboard-data',
+                                'lightning-charge'],
+                         menu_icon="app-indicator", default_index=0,
+                         styles={
+        "container": {"padding": "5!important", "background-color": "#fafafa"},
+        "icon": {"color": "orange", "font-size": "25px"},
+        "nav-link": {"font-size": "16px", "text-align": "left", "margin": "0px", "--hover-color": "#eee"},
+        "nav-link-selected": {"background-color": "#02ab21"},
+    }
+    )
+
+
+if choose == "Setting 0":
+
+    main_page(0 )
+
+elif choose == "Setting 1":
+
+    main_page(1)

@@ -43,17 +43,18 @@ mainTitle2idx = {"Data Info": 0,
                  "Protein-TF Correlation": 2
                  }
 
-st.session_state["main"] = 0
 
-def main_page(setting=1):
+
+def main_page(setting):
 
     path_data = Path(f"./data/set{setting}") 
 
     with st.sidebar:
+        default_value = st.session_state["main"] if "main" in st.session_state else 0
         choose = option_menu(f"Setting{setting}", ["Data Info", "TF Analyses", "Protein-TF Correlation"],
                             icons=['clipboard-data',
                                     'lightning-charge', 'bar-chart-line'],
-                            menu_icon="arrow-return-right", default_index=st.session_state["main"],
+                            menu_icon="arrow-return-right", default_index=default_value,
                             styles={
             "container": {"padding": "5!important", "background-color": "#fafafa"},
             "icon": {"color": "orange", "font-size": "18px"},
@@ -73,6 +74,8 @@ def main_page(setting=1):
         
         data_page(path_data)
 
-
-    st.session_state["main"] = mainTitle2idx[choose]
-    # st.write(st.session_state["main"])
+    
+    value = mainTitle2idx[choose]
+    st.session_state["main"] = value
+    st.write(st.session_state["main"])
+    st.write(choose)
