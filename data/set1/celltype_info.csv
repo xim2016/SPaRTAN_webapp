@@ -1,0 +1,13 @@
+"celltype","sample names","number of genes","number of proteins","final D size","RNArate","minimal.cells"
+"M1_Macrophage","P1_2020Oct, P2_2021Mar, P3_2023Jan","1906","52","1738, 200",0.2,30
+"CD4Tcell","P1_2020Oct, P2_2021Mar, P3_2023Jan","1259","52","1160, 192",0.2,30
+"Bcell","P1_2020Oct, P3_2023Jan","1602","52","1489, 195",0.2,30
+"Malignant_epithelial","P1_2020Oct, P2_2021Mar","1957","52","1819, 200",0.4,100
+"M2_Macrophage","P1_2020Oct, P3_2023Jan","1690","52","1552, 194",0.4,30
+"NKcell","P1_2020Oct, P2_2021Mar, P3_2023Jan","1417","52","1298, 193",0.2,30
+"DendriticCell","P1_2020Oct, P3_2023Jan","2123","52","1949, 201",0.4,30
+"CD8Tcell","P1_2020Oct, P2_2021Mar, P3_2023Jan","1248","52","1140, 191",0.2,30
+"MSC_Fibroblast","P1_2020Oct, P2_2021Mar, P3_2023Jan","1454","52","1351, 190",0.3,30
+"Myofibroblast","P1_2020Oct, P2_2021Mar","2066","52","1935, 198",0.5,30
+"Endothelial","P1_2020Oct, P3_2023Jan","1302","52","1210, 189",0.3,30
+"Malignant_mesothelial","P1_2020Oct, P3_2023Jan","2019","52","1873, 198",0.3,30

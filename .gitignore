@@ -1,0 +1,5 @@
+.venv
+.vscode
+__pycache__
+requirements - Copy.txt
+test.py
