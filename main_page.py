@@ -75,3 +75,4 @@ def main_page(setting=1):
 
 
     st.session_state["main"] = mainTitle2idx[choose]
+    # st.write(st.session_state["main"])
