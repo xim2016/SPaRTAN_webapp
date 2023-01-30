@@ -38,6 +38,13 @@ def set_page_container_style(prcnt_width: int = 75):
 
 set_page_container_style(75)
 
+mainTitle2idx = {"Data Info": 0,
+                 "TF Analyses": 1,
+                 "Protein-TF Correlation": 2
+                 }
+
+st.session_state["main"] = 0
+
 def main_page(setting=1):
 
     path_data = Path(f"./data/set{setting}") 
@@ -46,7 +53,7 @@ def main_page(setting=1):
         choose = option_menu(f"Setting{setting}", ["Data Info", "TF Analyses", "Protein-TF Correlation"],
                             icons=['clipboard-data',
                                     'lightning-charge', 'bar-chart-line'],
-                            menu_icon="arrow-return-right", default_index=0,
+                            menu_icon="arrow-return-right", default_index=st.session_state["main"],
                             styles={
             "container": {"padding": "5!important", "background-color": "#fafafa"},
             "icon": {"color": "orange", "font-size": "18px"},
@@ -56,12 +63,15 @@ def main_page(setting=1):
         )
 
     if choose == "Protein-TF Correlation":
-        a=1
+        
         correlation_page(path_data)
 
     elif choose == "TF Analyses":
-        a=1
+        
         TF_page(path_data)
     elif choose == "Data Info":
-        a=1
+        
         data_page(path_data)
+
+
+    st.session_state["main"] = mainTitle2idx[choose]

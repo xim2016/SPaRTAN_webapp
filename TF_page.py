@@ -11,14 +11,13 @@ my_theme = {'txc_inactive': 'black', 'menu_background': 'white',
             'txc_active': 'white', 'option_active': 'blue'}
 
 
-
 def TF_page(path_data):
 
 
     files = (path_data / "TFrank/within_celltype").iterdir()
     files = [i.name.replace('TFrank_samples_', '') for i in files]
     files = list(filter(lambda x: x != "figure", files))
-    celltypes = [i[:-4] for i in files]
+    celltypeAll = list([i[:-4] for i in files])
 
     # celltype_list_ordered = pd.read_csv(path_data/"celltype_list_ordered.csv")
     # group_order_type = list(celltype_list_ordered["Cell_type"].str.replace(" ", "."))
@@ -28,7 +27,7 @@ def TF_page(path_data):
         fname = str(
             path_data / "celltype_info.csv")
         df_info = pd.read_csv(fname, index_col=0)
-        fname = str(path_data / "TFrank_all_celltypes_samples.csv")
+        fname = str(path_data / "TFrank_all_celltypeAll_samples.csv")
         # df_ranks = pd.read_csv(fname)
         df_ranks_all = pd.read_parquet(path_data/"TFranks_all.parquet.gzip")
         return ((df_info, df_ranks_all))
@@ -46,6 +45,9 @@ def TF_page(path_data):
             continue
         snames = [x.strip() for x in snames.split(',')]
         type2ds[type] = snames
+
+    
+   
 
     selected = option_menu(None, ["Analysis by TF", "Analysis by cell-type", "Analysis by TF & cell-type"],
                         #    icons=["bi bi-grid-3x3", "bi bi-align-end",
@@ -75,8 +77,10 @@ def TF_page(path_data):
 
     if selected == 'Analysis by TF':
         st.info('For each TF, violin plot shows its ranks across cell types. You can select multiple TFs of your interest from TFs list for comparison.')
-        # violin plot for selected TFs
-        TFs_selected = st.multiselect('TFs', tfall, [tfall[0]])
+        # violin plot for selected TFs]]
+        defaults = st.session_state['1_tf'] if "1_tf" in st.session_state and set(st.session_state['1_tf']).issubset(set(tfall)) else [tfall[0]]
+        TFs_selected = st.multiselect('TFs', tfall, defaults)
+        st.session_state["1_tf"] = TFs_selected
         for tf in TFs_selected:
             df_ranks = df_ranks_all.loc[:, [tf, "Celltype"]]
             fig = violin_plot(tf, df_ranks, "Celltype",tf, 25, 5)
@@ -114,10 +118,12 @@ def TF_page(path_data):
         st.info('For each cell type, check the similarity and difference among samples of each TF rank. Cell types that have only one sample are not included in the dropdown list')
 
         # _, c_celltype,_ = st.columns([0,5,0])
-
-        s_celltype = st.selectbox(f'Cell type ({len(celltypes)})', celltypes, 0,
+        default = celltypeAll.index(celltypeAll[0]) if "2_celltype" not in st.session_state else st.session_state['2_celltype']
+        st.write(default)
+        s_celltype = st.selectbox(f'Cell type ({len(celltypeAll)})', celltypeAll, default,
                                   format_func=lambda x: x + " (Num of samples: " + str(len(type2ds[x])) + ")")
 
+        st.session_state["2_celltype"] = celltypeAll.index(s_celltype)
         imgfile = str(
             path_data / f"TFrank/within_celltype/figure/heatmap_TFrank_samples_{s_celltype}.png")
         imgfile_out = f"heatmap_TFrank_within_{s_celltype}.png"
@@ -156,10 +162,17 @@ def TF_page(path_data):
 
     elif selected == "Analysis by TF & cell-type":
         c3_1, c3_2 = st.columns(2)
-        tf3_selected = st.multiselect('TFs', tfall, [tfall[0]])
 
-        type3_selected = st.multiselect(f'Cell types', celltypes,[celltypes[0]],
+        defaults = st.session_state['3_tf'] if "3_tf" in st.session_state and set(st.session_state['3_tf']).issubset(set(tfall)) else [tfall[0]]
+        tf3_selected = st.multiselect('TFs', tfall, defaults)
+
+        defaults = st.session_state['3_celltype'] if "3_celltype" in st.session_state and set(st.session_state['3_celltype']).issubset(set(celltypeAll)) else [celltypeAll[0]]
+        type3_selected = st.multiselect(f'Cell types', celltypeAll, defaults,
                                  format_func=lambda x: x + " (Num of samples: " + str(len(type2ds[x])) + ")")
+
+        st.session_state["3_tf"] = tf3_selected
+        st.session_state["3_celltype"] = type3_selected
+
         for tf in tf3_selected:
             for type in type3_selected:
                 df_ranks_2 = df_ranks_all.loc[df_ranks_all['Celltype']==type, [tf, "Dataset"]]
