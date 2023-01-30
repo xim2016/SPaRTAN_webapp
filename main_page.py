@@ -51,6 +51,7 @@ def main_page(setting):
 
     with st.sidebar:
         default_value = st.session_state["main"] if "main" in st.session_state else 0
+        print( "main" in st.session_state)
         choose = option_menu(f"Setting{setting}", ["Data Info", "TF Analyses", "Protein-TF Correlation"],
                             icons=['clipboard-data',
                                     'lightning-charge', 'bar-chart-line'],
