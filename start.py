@@ -40,7 +40,7 @@ set_page_container_style(75)
 
 
 with st.sidebar:
-    choose = option_menu("Testing set", ["Setting 0", "Setting 1"],
+    choose1 = option_menu("Testing set", ["Setting 0", "Setting 1"],
                          icons=['clipboard-data',
                                 'lightning-charge'],
                          menu_icon="app-indicator", default_index=0,
@@ -53,10 +53,10 @@ with st.sidebar:
     )
 
 
-if choose == "Setting 0":
+if choose1 == "Setting 0":
 
     main_page(0 )
 
-elif choose == "Setting 1":
+elif choose1 == "Setting 1":
 
     main_page(1)

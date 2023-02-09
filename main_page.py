@@ -52,7 +52,7 @@ def main_page(setting):
     with st.sidebar:
         default_value = st.session_state["main"] if "main" in st.session_state else 0
         print( "main" in st.session_state)
-        choose = option_menu(f"Setting{setting}", ["Data Info", "TF Analyses", "Protein-TF Correlation"],
+        choose2 = option_menu(f"Setting{setting}", ["Data Info", "TF Analyses", "Protein-TF Correlation"],
                             icons=['clipboard-data',
                                     'lightning-charge', 'bar-chart-line'],
                             menu_icon="arrow-return-right", default_index=default_value,
@@ -64,18 +64,18 @@ def main_page(setting):
         }
         )
 
-    if choose == "Protein-TF Correlation":
+    if choose2 == "Protein-TF Correlation":
         
         correlation_page(path_data)
 
-    elif choose == "TF Analyses":
+    elif choose2 == "TF Analyses":
         
         TF_page(path_data)
-    elif choose == "Data Info":
+    elif choose2 == "Data Info":
         
         data_page(path_data)
 
     
-    value = mainTitle2idx[choose]
+    value = mainTitle2idx[choose2]
     st.session_state["main"] = value
     

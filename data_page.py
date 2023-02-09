@@ -24,8 +24,8 @@ def data_page(path_data):
 
 
 
-    selected = option_menu(None, ["Original data",  "SPaRTAN data"],
-                           icons=["clipboard", "clipboard-plus"],
+    selected = option_menu(None, ["Overview", "Protein", "mRNA", "SPaRTAN data"],
+                           icons=["clipboard", "hdd-fill", "hdd-stack", "clipboard-plus"],
                            menu_icon="cast", default_index=0, orientation="horizontal",
                            styles={
         "container": {"padding": "5!important", "background-color": "#eee"},
@@ -35,7 +35,7 @@ def data_page(path_data):
         # "separator":"."
     })
 
-    if selected == "Original data":
+    if selected == "Overview":
 
         hide_dataframe_index()
         # st.write("Donors (4):")
@@ -57,7 +57,21 @@ def data_page(path_data):
         # show_dataframe_index()
         st.markdown('''###### Cell count:''')
         st.table(cell_count)
+
+    elif selected == "Protein":
+        path_ADT = Path("./data/ADT_data")
+        c1,c2 = st.columns(2)
+        p_selected = c1.selectbox(
+                'Protein',
+                list(protein_names.loc['x',:]),
+                0
+            )
+
+        imgfile = str(path_ADT / f"ViolinPlot_CLR2_{p_selected}.TotalSeqC.png"
+            )
         
+        st.image(imgfile)
+
     elif selected == "SPaRTAN data":
         # st.info("SPaRTAN moodule was trained on dataset per donor per cell type. We selected genes by intersecting genes in TF-target gene prior matrix and filtered the genes that have to be expressed in 30\% cells in all donors in a single cell type. Not every cell type has cells(or enough cells) for every donor to run SPaRTAN module. We specify each module dataset has minimal 50 cells")
 
