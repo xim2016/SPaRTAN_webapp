@@ -5,6 +5,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from utils import hide_table_index, hide_dataframe_index
 import os
+from PIL import Image
 
 def show_pdf(file_path):
     with open(file_path,"rb") as f:
@@ -164,8 +165,10 @@ def data_page(path_data):
                 )
             
             imgfile = str(path_plot / f"OutComplexHeatmap_Mesothelioma_{sel_3}_{sel_4}_SCTNormalExp_Reorder.pdf")
-            show_pdf(imgfile)
-            # st.image(imgfile)
+
+            # image = Image.open(imgfile)
+            show_pdf(imgfile) 
+            # st.image(image)
 
     elif selected == "SPaRTAN data":
         # st.info("SPaRTAN moodule was trained on dataset per donor per cell type. We selected genes by intersecting genes in TF-target gene prior matrix and filtered the genes that have to be expressed in 30\% cells in all donors in a single cell type. Not every cell type has cells(or enough cells) for every donor to run SPaRTAN module. We specify each module dataset has minimal 50 cells")
