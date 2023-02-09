@@ -1,5 +1,4 @@
 from pathlib import Path
-import base64
 import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
@@ -7,11 +6,11 @@ from utils import hide_table_index, hide_dataframe_index
 import os
 from PIL import Image
 
-def show_pdf(file_path):
-    with open(file_path,"rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="950" height="800" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+# def show_pdf(file_path):
+#     with open(file_path,"rb") as f:
+#         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+#     pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="950" height="800" type="application/pdf"></iframe>'
+#     st.markdown(pdf_display, unsafe_allow_html=True)
 
 
 
@@ -167,7 +166,7 @@ def data_page(path_data):
             imgfile = str(path_plot / f"OutComplexHeatmap_Mesothelioma_{sel_3}_{sel_4}_SCTNormalExp_Reorder.pdf")
 
             # image = Image.open(imgfile)
-            show_pdf(imgfile) 
+            # show_pdf(imgfile) 
             # st.image(image)
 
     elif selected == "SPaRTAN data":
