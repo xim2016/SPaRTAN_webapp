@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
 from utils import hide_table_index, hide_dataframe_index
+import os
 
 path = "./data"
 protein_names = pd.read_csv(Path(path)/"protein_names.csv", index_col=0).T
@@ -12,6 +13,12 @@ dataset_info = pd.read_csv(Path(path)/"dataset_info.csv", index_col=0)
 
 cell_count = pd.read_csv( Path(path)/"cell_count.csv")
 cell_count.index.name = None
+
+# get the gene names of mRNA violin plot
+path_mRNA = ("./data/mRNA_data/violinPlot")
+
+gene_list = [x.split(".")[0][11:] for x in os.listdir(path_mRNA)]
+
 def data_page(path_data):
     
     spartan_data = pd.read_csv(
@@ -59,15 +66,63 @@ def data_page(path_data):
         st.table(cell_count)
 
     elif selected == "Protein":
-        path_ADT = Path("./data/ADT_data")
+
+        selected_sub = option_menu(None, ["by Protein", "by Patient"],
+                        #    icons=["clipboard", "hdd-fill", "hdd-stack", "clipboard-plus"],
+                           menu_icon="cast", default_index=0, orientation="horizontal",
+                           styles={
+        "container": {"padding": "5!important", "background-color": "#eee"},
+        # "icon": {"color": "orange", "font-size": "14px"},
+        "nav-link": {"font-size": "18px", "text-align": "center", "margin": "0px", "--hover-color": "#fafafa"},
+        "nav-link-selected": {"background-color": "#80adcc"},
+        # "separator":"."
+                            }
+                        )
+        #858d83
+        if selected_sub == "by Protein":
+       
+            path_ADT = Path("./data/ADT_data/violinPlot")
+            c1,c2 = st.columns(2)
+            pro_selected = c1.selectbox(
+                    'Protein',
+                    list(protein_names.loc['x',:]),
+                    0
+                )
+
+            imgfile = str(path_ADT / f"ViolinPlot_CLR2_{pro_selected}.TotalSeqC.png"
+                )
+            
+            st.image(imgfile)
+
+        elif selected_sub == "by Patient":
+       
+            path_ADT = Path("./data/ADT_data/heatmap")
+            c3,c4 = st.columns(2)
+            pat_selected = c3.selectbox(
+                    'Patient',
+                    dataset_info.index.tolist(),
+                    0
+                )
+
+            imgfile = str(path_ADT / f"{pat_selected} CLR margein=2 ADT mean.png"
+                )
+            
+            st.image(imgfile)
+
+
+    elif selected == "mRNA":
+
+    
+       
+        path_gene = Path("./data/mRNA_data/violinPlot")
         c1,c2 = st.columns(2)
-        p_selected = c1.selectbox(
-                'Protein',
-                list(protein_names.loc['x',:]),
+        gene_selected = c1.selectbox(
+                'Gene',
+                gene_list,
                 0
             )
 
-        imgfile = str(path_ADT / f"ViolinPlot_CLR2_{p_selected}.TotalSeqC.png"
+        imgfile = str(path_gene / f"ViolinPlot_{gene_selected}.png"
             )
         
         st.image(imgfile)
