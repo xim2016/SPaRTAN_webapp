@@ -104,7 +104,7 @@ def data_page(path_data):
                     0
                 )
 
-            imgfile = str(path_ADT / f"{pat_selected} CLR margein=2 ADT mean.png"
+            imgfile = str(path_ADT / f"{pat_selected} CLR margin=2 ADT mean.png"
                 )
             
             st.image(imgfile)
