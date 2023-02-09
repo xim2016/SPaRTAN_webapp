@@ -1,10 +1,18 @@
 from pathlib import Path
-
+import base64
 import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
 from utils import hide_table_index, hide_dataframe_index
 import os
+
+def show_pdf(file_path):
+    with open(file_path,"rb") as f:
+        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="950" height="800" type="application/pdf"></iframe>'
+    st.markdown(pdf_display, unsafe_allow_html=True)
+
+
 
 path = "./data"
 protein_names = pd.read_csv(Path(path)/"protein_names.csv", index_col=0).T
@@ -97,8 +105,8 @@ def data_page(path_data):
         elif selected_sub == "by Patient":
        
             path_ADT = Path("./data/ADT_data/heatmap")
-            c3,c4 = st.columns(2)
-            pat_selected = c3.selectbox(
+            # c3,c4 = st.columns(2)
+            pat_selected = st.selectbox(
                     'Patient',
                     dataset_info.index.tolist(),
                     0
@@ -112,20 +120,52 @@ def data_page(path_data):
 
     elif selected == "mRNA":
 
-    
+        selected_sub2 = option_menu(None, ["Violin plot", "Heatmap"],
+                        #    icons=["clipboard", "hdd-fill", "hdd-stack", "clipboard-plus"],
+                           menu_icon="cast", default_index=0, orientation="horizontal",
+                           styles={
+        "container": {"padding": "5!important", "background-color": "#eee"},
+        # "icon": {"color": "orange", "font-size": "14px"},
+        "nav-link": {"font-size": "18px", "text-align": "center", "margin": "0px", "--hover-color": "#fafafa"},
+        "nav-link-selected": {"background-color": "#80adcc"},
+        # "separator":"."
+                            }
+                        )
+        #858d83
+        if selected_sub2 == "Violin plot":
        
-        path_gene = Path("./data/mRNA_data/violinPlot")
-        c1,c2 = st.columns(2)
-        gene_selected = c1.selectbox(
-                'Gene',
-                gene_list,
-                0
-            )
+            path_gene = Path("./data/mRNA_data/violinPlot")
+            c1,c2 = st.columns(2)
+            gene_selected = c1.selectbox(
+                    'Gene',
+                    gene_list,
+                    0
+                )
 
-        imgfile = str(path_gene / f"ViolinPlot_{gene_selected}.png"
-            )
-        
-        st.image(imgfile)
+            imgfile = str(path_gene / f"ViolinPlot_{gene_selected}.png"
+                )
+            
+            st.image(imgfile)
+        elif selected_sub2 == "Heatmap":
+            path_plot = Path("./data/mRNA_data/heatmap")
+
+            c3,c4 = st.columns(2)
+            list3 = ["Cytoskeleton",  "CytokineReceptor", "IRFGene","InterestingGene","ImmuneGene","ImmuneCheckpoint"]
+            list4 = ["AllCellType", "ImmuneCellType", "NonImmuneCellType"]
+            sel_3 = c3.selectbox(
+                    'Gene type',
+                    list3,
+                    0
+                ) 
+            sel_4 = c4.selectbox(
+                    'Cell type',
+                    list4,
+                    0
+                )
+            
+            imgfile = str(path_plot / f"OutComplexHeatmap_Mesothelioma_{sel_3}_{sel_4}_SCTNormalExp_Reorder.pdf")
+            show_pdf(imgfile)
+            # st.image(imgfile)
 
     elif selected == "SPaRTAN data":
         # st.info("SPaRTAN moodule was trained on dataset per donor per cell type. We selected genes by intersecting genes in TF-target gene prior matrix and filtered the genes that have to be expressed in 30\% cells in all donors in a single cell type. Not every cell type has cells(or enough cells) for every donor to run SPaRTAN module. We specify each module dataset has minimal 50 cells")
