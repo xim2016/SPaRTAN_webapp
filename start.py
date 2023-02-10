@@ -40,7 +40,7 @@ set_page_container_style(75)
 
 
 with st.sidebar:
-    choose1 = option_menu("Testing set", ["Setting_0", "Setting_1", "CLR2norm"],
+    choose1 = option_menu("Testing set", ["Setting 0", "Setting 1", "CLR2norm"],
                          icons=['clipboard-data',
                                 'lightning-charge',
                                 'lightning-charge'],
@@ -52,8 +52,9 @@ with st.sidebar:
         "nav-link-selected": {"background-color": "#02ab21"},
     }
     )
-
-main_page(choose1)
+cleaned_setting = choose1.replace(" ","_")
+cleaned_setting = cleaned_setting.lower()
+main_page(choose1, cleaned_setting)
 # if choose1 == "Setting_0":
 
 #     main_page(choose1)

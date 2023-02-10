@@ -45,14 +45,14 @@ mainTitle2idx = {"Data Info": 0,
 
 
 
-def main_page(setting):
+def main_page(orisetting, cleanedsetting):
 
-    path_data = Path(f"./data/{setting}") 
+    path_data = Path(f"./data/{cleanedsetting}") 
 
     with st.sidebar:
         default_value = st.session_state["main"] if "main" in st.session_state else 0
         print( "main" in st.session_state)
-        choose2 = option_menu(setting, ["Data Info", "TF Analyses", "Protein-TF Correlation"],
+        choose2 = option_menu(orisetting, ["Data Info", "TF Analyses", "Protein-TF Correlation"],
                             icons=['clipboard-data',
                                     'lightning-charge', 'bar-chart-line'],
                             menu_icon="arrow-return-right", default_index=default_value,
