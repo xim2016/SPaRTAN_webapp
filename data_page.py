@@ -13,6 +13,35 @@ from PIL import Image
 #     st.markdown(pdf_display, unsafe_allow_html=True)
 
 
+page_style = """
+        <style>
+        #MainMenu {visibility: hidden;}  
+        footer  {visibility: hidden;}  
+        div.css-1vq4p4l.e1fqkh3o4{padding: 2rem 1rem 1.5rem;}
+        div.block-container{padding-top:3rem;}
+        </style>
+        """
+
+# st.write('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
+# st.write('<style>div.css-1vq4p4l.e1fqkh3o4{padding: 4rem 1rem 1.5rem;}</style>', unsafe_allow_html=True)
+
+
+def set_page_container_style(prcnt_width: int = 75):
+    max_width_str = f"max-width: {prcnt_width}%;"
+    st.markdown(page_style, unsafe_allow_html=True)
+    st.markdown(f"""
+                <style> 
+                
+                .appview-container .main .block-container{{{max_width_str}}}
+                </style>    
+                """,
+                unsafe_allow_html=True,
+                )
+
+
+set_page_container_style(75)
+
+
 path = "./data"
 protein_names = pd.read_csv(Path(path)/"protein_names.csv", index_col=0).T
 celltype_names = pd.read_csv(Path(path)/"celltype_names.csv", index_col=0).T
@@ -28,7 +57,7 @@ gene_list = [x.split(".")[0][11:] for x in os.listdir(path_mRNA)]
 
 
 def data_page(path_data):
-
+    st.write(str(Path(path_data)/"celltype_info.csv"))
     spartan_data = pd.read_csv(
         Path(path_data)/"celltype_info.csv", index_col=0)
 
