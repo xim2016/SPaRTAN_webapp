@@ -57,7 +57,7 @@ gene_list = [x.split(".")[0][11:] for x in os.listdir(path_mRNA)]
 
 
 def data_page(path_data):
-    st.write(str(Path(path_data)/"celltype_info.csv"))
+
     spartan_data = pd.read_csv(
         Path(path_data)/"celltype_info.csv", index_col=0)
 
