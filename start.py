@@ -53,7 +53,7 @@ with st.sidebar:
     }
     )
 cleaned_setting = choose1.replace(" ","_")
-cleaned_setting = cleaned_setting.lower()
+
 main_page(choose1, cleaned_setting)
 # if choose1 == "Setting_0":
 
