@@ -15,6 +15,7 @@ def TF_page(path_data):
 
 
     files = (path_data / "TFrank/within_celltype").iterdir()
+    st.write(str(path_data / "TFrank/within_celltype"))
     files = [i.name.replace('TFrank_samples_', '') for i in files]
     files = list(filter(lambda x: x != "figure", files))
     celltypeAll = list([i[:-4] for i in files])
