@@ -40,8 +40,9 @@ set_page_container_style(75)
 
 
 with st.sidebar:
-    choose1 = option_menu("Testing set", ["Setting 0", "Setting 1"],
+    choose1 = option_menu("Testing set", ["Setting 0", "Setting 1", "CLR2norm"],
                          icons=['clipboard-data',
+                                'lightning-charge',
                                 'lightning-charge'],
                          menu_icon="app-indicator", default_index=0,
                          styles={
@@ -60,3 +61,7 @@ if choose1 == "Setting 0":
 elif choose1 == "Setting 1":
 
     main_page(1)
+
+elif choose1 == "CLR2norm":
+
+    main_page(2)

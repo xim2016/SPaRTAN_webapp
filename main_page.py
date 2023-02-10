@@ -47,7 +47,10 @@ mainTitle2idx = {"Data Info": 0,
 
 def main_page(setting):
 
-    path_data = Path(f"./data/set{setting}") 
+    if setting == 2:
+        path_data = Path(f"./data/CLR2") 
+    else:
+        path_data = Path(f"./data/set{setting}") 
 
     with st.sidebar:
         default_value = st.session_state["main"] if "main" in st.session_state else 0

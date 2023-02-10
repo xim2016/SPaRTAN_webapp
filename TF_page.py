@@ -119,7 +119,7 @@ def TF_page(path_data):
 
         # _, c_celltype,_ = st.columns([0,5,0])
         default = celltypeAll.index(celltypeAll[0]) if "2_celltype" not in st.session_state else st.session_state['2_celltype']
-        st.write(default)
+        # st.write(default)
         s_celltype = st.selectbox(f'Cell type ({len(celltypeAll)})', celltypeAll, default,
                                   format_func=lambda x: x + " (Num of samples: " + str(len(type2ds[x])) + ")")
 
@@ -135,7 +135,7 @@ def TF_page(path_data):
             path_data / f"TFrank/within_celltype/TFrank_samples_{s_celltype}.csv")
         datafile_out = f"TFranks_within_{s_celltype}.csv"
 
-        st.write(datafile)
+        # st.write(datafile)
         df_data = load_data(datafile)
 
         c_checkbox, _, c_dwdata, c_dwimg = st.columns([3, 5, 3, 3])
