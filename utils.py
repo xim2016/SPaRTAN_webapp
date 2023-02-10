@@ -30,7 +30,7 @@ def violin_plot(title, data_group, x, y, width, height):
 
     sns.violinplot(x=x, y=y, data=data_group, ax=ax)
     ax.set_title("{} ".format(title),  fontsize=26)
-    ax.set_ylabel("Normalized TF rank", fontsize=20)
+    ax.set_ylabel("TF rank", fontsize=20)
     ax.set_xlabel("")
     plt.xticks(rotation=45, fontsize=16)
     plt.setp(ax.xaxis.get_majorticklabels(), ha='right')

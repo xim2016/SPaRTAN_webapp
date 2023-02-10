@@ -110,7 +110,7 @@ def TF_page(path_data):
         )
 
         if cb:
-            st.dataframe(df_data, use_container_width=True)
+            st.dataframe(df_data.style.format(precision=0), use_container_width=True)
 
 
     elif selected == 'Analysis by cell-type':
@@ -158,7 +158,7 @@ def TF_page(path_data):
         )
 
         if cb:
-            st.dataframe(df_data, use_container_width=True)
+            st.dataframe(df_data.style.format(precision=0), use_container_width=True)
 
     elif selected == "Analysis by TF & cell-type":
         c3_1, c3_2 = st.columns(2)
@@ -204,4 +204,4 @@ def TF_page(path_data):
         )
 
         if cb:
-            st.dataframe(df_data, use_container_width=True)
+            st.dataframe(df_data.style.format(precision=0), use_container_width=True)

@@ -40,7 +40,7 @@ set_page_container_style(75)
 
 
 with st.sidebar:
-    choose1 = option_menu("Testing set", ["Setting 0", "Setting 1", "CLR2norm"],
+    choose1 = option_menu("Testing set", ["Setting_0", "Setting_1", "CLR2norm"],
                          icons=['clipboard-data',
                                 'lightning-charge',
                                 'lightning-charge'],
@@ -53,15 +53,15 @@ with st.sidebar:
     }
     )
 
+main_page(choose1)
+# if choose1 == "Setting_0":
 
-if choose1 == "Setting 0":
+#     main_page(choose1)
 
-    main_page(0 )
+# elif choose1 == "Setting 1":
 
-elif choose1 == "Setting 1":
+#     main_page(choose1)
 
-    main_page(1)
+# elif choose1 == "CLR2norm":
 
-elif choose1 == "CLR2norm":
-
-    main_page(2)
+#     main_page(choose1)
