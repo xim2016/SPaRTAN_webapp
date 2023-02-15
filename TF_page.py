@@ -5,17 +5,17 @@ import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-from utils import convert_df_to_csv, img2buf, load_data, violin_plot
+from utils import convert_df_to_csv, img2buf, load_data, violin_plot, set_page_container_style
 
 my_theme = {'txc_inactive': 'black', 'menu_background': 'white',
             'txc_active': 'white', 'option_active': 'blue'}
 
+set_page_container_style(75)
 
 def TF_page(path_data):
 
 
     files = (path_data / "TFrank/within_celltype").iterdir()
-    st.write(str(path_data / "TFrank/within_celltype"))
     files = [i.name.replace('TFrank_samples_', '') for i in files]
     files = list(filter(lambda x: x != "figure", files))
     celltypeAll = list([i[:-4] for i in files])

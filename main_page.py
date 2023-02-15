@@ -6,6 +6,7 @@ from streamlit_option_menu import option_menu
 from correlation_page import correlation_page
 from data_page import data_page
 from TF_page import TF_page
+from utils import set_page_container_style
 
 from pathlib import Path
 Image.MAX_IMAGE_PIXELS = None
@@ -22,18 +23,6 @@ page_style = """
 # st.write('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
 # st.write('<style>div.css-1vq4p4l.e1fqkh3o4{padding: 4rem 1rem 1.5rem;}</style>', unsafe_allow_html=True)
 
-
-def set_page_container_style(prcnt_width: int = 75):
-    max_width_str = f"max-width: {prcnt_width}%;"
-    st.markdown(page_style, unsafe_allow_html=True)
-    st.markdown(f"""
-                <style> 
-                
-                .appview-container .main .block-container{{{max_width_str}}}
-                </style>    
-                """,
-                unsafe_allow_html=True,
-                )
 
 
 set_page_container_style(75)
@@ -52,9 +41,9 @@ def main_page(orisetting, cleanedsetting):
     with st.sidebar:
         default_value = st.session_state["main"] if "main" in st.session_state else 0
         print( "main" in st.session_state)
-        choose2 = option_menu(orisetting, ["Data Info", "TF Analyses", "Protein-TF Correlation"],
+        choose2 = option_menu(orisetting, ["Data Info", "TF Analyses", "Protein-TF Correlation",  "Protein-TFrank Correlation"],
                             icons=['clipboard-data',
-                                    'lightning-charge', 'bar-chart-line'],
+                                    'lightning-charge', 'bar-chart-line','bar-chart-line'],
                             menu_icon="arrow-return-right", default_index=default_value,
                             styles={
             "container": {"padding": "5!important", "background-color": "#fafafa"},
@@ -74,8 +63,7 @@ def main_page(orisetting, cleanedsetting):
     elif choose2 == "Data Info":
         
         data_page(path_data)
-
-    
+   
     value = mainTitle2idx[choose2]
     st.session_state["main"] = value
     

@@ -7,7 +7,7 @@ from main_page import main_page
 
 # Image.MAX_IMAGE_PIXELS = None
 
-
+from utils import set_page_container_style
 
 
 page_style = """
@@ -23,26 +23,13 @@ page_style = """
 # st.write('<style>div.css-1vq4p4l.e1fqkh3o4{padding: 4rem 1rem 1.5rem;}</style>', unsafe_allow_html=True)
 
 
-def set_page_container_style(prcnt_width: int = 75):
-    max_width_str = f"max-width: {prcnt_width}%;"
-    st.markdown(page_style, unsafe_allow_html=True)
-    st.markdown(f"""
-                <style> 
-                
-                .appview-container .main .block-container{{{max_width_str}}}
-                </style>    
-                """,
-                unsafe_allow_html=True,
-                )
-
 
 set_page_container_style(75)
 
 
 with st.sidebar:
-    choose1 = option_menu("Testing set", ["Setting 0", "Setting 1", "CLR2norm"],
+    choose1 = option_menu("Testing set", ["CLR1norm","CLR2norm"],
                          icons=['clipboard-data',
-                                'lightning-charge',
                                 'lightning-charge'],
                          menu_icon="app-indicator", default_index=0,
                          styles={

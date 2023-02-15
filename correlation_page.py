@@ -1,10 +1,10 @@
 import pandas as pd
 import streamlit as st
 from pathlib import Path
-from utils import img2buf, violin_plot, convert_df_to_csv, load_data
+from utils import img2buf, violin_plot, convert_df_to_csv, load_data, set_page_container_style
 
 
-
+set_page_container_style(75)
 
 def correlation_page(path_data,last_select=""):
 
@@ -13,7 +13,7 @@ def correlation_page(path_data,last_select=""):
     @st.cache
     def load_corrall(datafile):
         return(pd.read_csv(datafile, index_col=0))
-        
+ 
     df_corrall = load_corrall(str(path_data / "protein_TF_abs_highCorr_inAllExistSamples_cutoff0.3.csv"))
 
     celltypes = sorted(set(df_corrall['Celltype']))
@@ -30,7 +30,6 @@ def correlation_page(path_data,last_select=""):
         celltype2Nsample[celltype] = Nsamples
 
     celltypes = celltypes2
-
     st.markdown("### Correlation betwen surface protein and Transcription Factor(TF)", True)
     st.info('Explore the sample mean of protein-TF correlations for each cell type and protein. The protein-TF pairs with lower correlation (abs<0.3) in all samples of each cell type have been removed. Cell types having less than 2 samples are not included in the list.')
  

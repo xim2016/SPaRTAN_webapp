@@ -2,7 +2,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
-from utils import hide_table_index, hide_dataframe_index
+from utils import hide_table_index, hide_dataframe_index, set_page_container_style
 import os
 from PIL import Image
 
@@ -24,19 +24,6 @@ page_style = """
 
 # st.write('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
 # st.write('<style>div.css-1vq4p4l.e1fqkh3o4{padding: 4rem 1rem 1.5rem;}</style>', unsafe_allow_html=True)
-
-
-def set_page_container_style(prcnt_width: int = 75):
-    max_width_str = f"max-width: {prcnt_width}%;"
-    st.markdown(page_style, unsafe_allow_html=True)
-    st.markdown(f"""
-                <style> 
-                
-                .appview-container .main .block-container{{{max_width_str}}}
-                </style>    
-                """,
-                unsafe_allow_html=True,
-                )
 
 
 set_page_container_style(75)
