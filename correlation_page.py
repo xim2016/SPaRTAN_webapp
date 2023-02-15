@@ -1,7 +1,18 @@
 import pandas as pd
 import streamlit as st
 from pathlib import Path
-from utils import img2buf, violin_plot, convert_df_to_csv, load_data, set_page_container_style
+from utils import img2buf, violin_plot, convert_df_to_csv, load_data
+
+def set_page_container_style(prcnt_width: int = 75):
+    max_width_str = f"max-width: {prcnt_width}%;"
+    st.markdown(f"""
+                <style> 
+                
+                .appview-container .main .block-container{{{max_width_str}}}
+                </style>    
+                """,
+                unsafe_allow_html=True,
+                )
 
 
 set_page_container_style(75)

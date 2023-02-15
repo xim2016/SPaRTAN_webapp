@@ -2,9 +2,21 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
-from utils import hide_table_index, hide_dataframe_index, set_page_container_style
+from utils import hide_table_index, hide_dataframe_index
 import os
 from PIL import Image
+
+def set_page_container_style(prcnt_width: int = 75):
+    max_width_str = f"max-width: {prcnt_width}%;"
+    st.markdown(f"""
+                <style> 
+                
+                .appview-container .main .block-container{{{max_width_str}}}
+                </style>    
+                """,
+                unsafe_allow_html=True,
+                )
+
 
 # def show_pdf(file_path):
 #     with open(file_path,"rb") as f:

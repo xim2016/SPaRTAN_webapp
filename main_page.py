@@ -6,10 +6,22 @@ from streamlit_option_menu import option_menu
 from correlation_page import correlation_page
 from data_page import data_page
 from TF_page import TF_page
-from utils import set_page_container_style
+# from utils import set_page_container_style
 
 from pathlib import Path
 Image.MAX_IMAGE_PIXELS = None
+
+def set_page_container_style(prcnt_width: int = 75):
+    max_width_str = f"max-width: {prcnt_width}%;"
+    st.markdown(f"""
+                <style> 
+                
+                .appview-container .main .block-container{{{max_width_str}}}
+                </style>    
+                """,
+                unsafe_allow_html=True,
+                )
+
 
 page_style = """
         <style>
@@ -41,9 +53,9 @@ def main_page(orisetting, cleanedsetting):
     with st.sidebar:
         default_value = st.session_state["main"] if "main" in st.session_state else 0
         print( "main" in st.session_state)
-        choose2 = option_menu(orisetting, ["Data Info", "TF Analyses", "Protein-TF Correlation",  "Protein-TFrank Correlation"],
+        choose2 = option_menu(orisetting, ["Data Info", "TF Analyses", "Protein-TF Correlation"],
                             icons=['clipboard-data',
-                                    'lightning-charge', 'bar-chart-line','bar-chart-line'],
+                                    'lightning-charge', 'bar-chart-line'],
                             menu_icon="arrow-return-right", default_index=default_value,
                             styles={
             "container": {"padding": "5!important", "background-color": "#fafafa"},

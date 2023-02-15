@@ -7,7 +7,17 @@ from main_page import main_page
 
 # Image.MAX_IMAGE_PIXELS = None
 
-from utils import set_page_container_style
+# from utils import set_page_container_style
+def set_page_container_style(prcnt_width: int = 75):
+    max_width_str = f"max-width: {prcnt_width}%;"
+    st.markdown(f"""
+                <style> 
+                
+                .appview-container .main .block-container{{{max_width_str}}}
+                </style>    
+                """,
+                unsafe_allow_html=True,
+                )
 
 
 page_style = """
