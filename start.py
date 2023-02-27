@@ -5,6 +5,8 @@ from streamlit_option_menu import option_menu
 
 from main_page import main_page
 
+from register_load_widget_state import  load_widget_state
+
 # Image.MAX_IMAGE_PIXELS = None
 
 # from utils import set_page_container_style
@@ -51,7 +53,7 @@ with st.sidebar:
     }
     )
 cleaned_setting = choose1.replace(" ","_")
-
+load_widget_state()
 main_page(choose1, cleaned_setting)
 # if choose1 == "Setting_0":
 
