@@ -8,6 +8,7 @@ from streamlit_option_menu import option_menu
 from utils import convert_df_to_csv, img2buf, load_data, violin_plot
 
 
+
 def set_page_container_style(prcnt_width: int = 75):
     max_width_str = f"max-width: {prcnt_width}%;"
     st.markdown(f"""
@@ -24,6 +25,9 @@ my_theme = {'txc_inactive': 'black', 'menu_background': 'white',
             'txc_active': 'white', 'option_active': 'blue'}
 
 set_page_container_style(75)
+
+init_run = True
+st.write(f"this is init_run {init_run}")
 
 def TF_page(path_data):
 
@@ -54,13 +58,13 @@ def TF_page(path_data):
 
     type2ds = {}
     for type in list(df_info.index):
-        snames = df_info.loc[type, "sample names"]
+        snames = df_info.loc[type, "Donors"]
         if pd.isna(snames):
             continue
         snames = [x.strip() for x in snames.split(',')]
         type2ds[type] = snames
 
-    
+    # st.write(type2ds)
    
 
     selected = option_menu(None, ["Analysis by TF", "Analysis by cell-type", "Analysis by TF & cell-type"],
@@ -92,8 +96,10 @@ def TF_page(path_data):
     if selected == 'Analysis by TF':
         st.info('For each TF, violin plot shows its ranks across cell types. You can select multiple TFs of your interest from TFs list for comparison.')
         # violin plot for selected TFs]]
-        defaults = st.session_state['1_tf'] if "1_tf" in st.session_state and set(st.session_state['1_tf']).issubset(set(tfall)) else [tfall[0]]
-        TFs_selected = st.multiselect('TFs', tfall, defaults)
+        defaults = st.session_state['1_tf'] if "1_tf" in st.session_state and set(st.session_state['1_tf']).issubset(set(tfall)) and len(set(st.session_state['1_tf']))>0 else [tfall[0]]
+    
+        TFs_selected = st.multiselect('TFs', tfall)
+        # st.write(TFs_selected)
         st.session_state["1_tf"] = TFs_selected
         for tf in TFs_selected:
             df_ranks = df_ranks_all.loc[:, [tf, "Celltype"]]
@@ -108,7 +114,7 @@ def TF_page(path_data):
         # c.image(imgfile)
 
 
-        df_data = df_ranks_all[['Celltype', 'Dataset'] + TFs_selected]
+        df_data = df_ranks_all[['Celltype', 'Donor'] + TFs_selected]
         # df_data = df_data.set_index('Celltype')
         c_checkbox, _, c_dwdata = st.columns([3, 9, 3])
         cb = c_checkbox.checkbox("Show data", key="TFrank")
@@ -126,7 +132,7 @@ def TF_page(path_data):
         if cb:
             st.dataframe(df_data.style.format(precision=0), use_container_width=True)
 
-
+        
     elif selected == 'Analysis by cell-type':
 
         st.info('For each cell type, check the similarity and difference among samples of each TF rank. Cell types that have only one sample are not included in the dropdown list')
@@ -135,7 +141,7 @@ def TF_page(path_data):
         default = celltypeAll.index(celltypeAll[0]) if "2_celltype" not in st.session_state else st.session_state['2_celltype']
         # st.write(default)
         s_celltype = st.selectbox(f'Cell type ({len(celltypeAll)})', celltypeAll, default,
-                                  format_func=lambda x: x + " (Num of samples: " + str(len(type2ds[x])) + ")")
+                                  format_func=lambda x: x + " (Num of donors: " + str(len(type2ds[x])) + ")")
 
         st.session_state["2_celltype"] = celltypeAll.index(s_celltype)
         imgfile = str(
@@ -178,20 +184,28 @@ def TF_page(path_data):
         c3_1, c3_2 = st.columns(2)
 
         defaults = st.session_state['3_tf'] if "3_tf" in st.session_state and set(st.session_state['3_tf']).issubset(set(tfall)) else [tfall[0]]
-        tf3_selected = st.multiselect('TFs', tfall, defaults)
+
+        if not init_run:
+            defaults = None
+
+        tf3_selected = st.multiselect('TFs', tfall)
 
         defaults = st.session_state['3_celltype'] if "3_celltype" in st.session_state and set(st.session_state['3_celltype']).issubset(set(celltypeAll)) else [celltypeAll[0]]
-        type3_selected = st.multiselect(f'Cell types', celltypeAll, defaults,
-                                 format_func=lambda x: x + " (Num of samples: " + str(len(type2ds[x])) + ")")
+
+        if not init_run:
+            defaults = None
+
+        type3_selected = st.multiselect(f'Cell types', celltypeAll, 
+                                 format_func=lambda x: x + " (Num of donors: " + str(len(type2ds[x])) + ")")
 
         st.session_state["3_tf"] = tf3_selected
         st.session_state["3_celltype"] = type3_selected
 
         for tf in tf3_selected:
             for type in type3_selected:
-                df_ranks_2 = df_ranks_all.loc[df_ranks_all['Celltype']==type, [tf, "Dataset"]]
+                df_ranks_2 = df_ranks_all.loc[df_ranks_all['Celltype']==type, [tf, "Donor"]]
                 # group_order_donor = type2ds[type]
-                fig = violin_plot(f"{tf} in {type}", df_ranks_2, "Dataset", tf, 25,5)
+                fig = violin_plot(f"{tf} in {type}", df_ranks_2, "Donor", tf, 25,5)
                 st.pyplot(fig)
 
         s3_TFs = "_".join(tf3_selected)
@@ -203,7 +217,7 @@ def TF_page(path_data):
         # c.image(imgfile)
 
         
-        df_data = df_ranks_all.loc[df_ranks_all["Celltype"].isin(type3_selected), ['Celltype', 'Dataset'] + tf3_selected]
+        df_data = df_ranks_all.loc[df_ranks_all["Celltype"].isin(type3_selected), ['Celltype', 'Donor'] + tf3_selected]
         # df_data = df_data.set_index('Celltype')
         c_checkbox, _, c_dwdata = st.columns([3, 9, 3])
         cb = c_checkbox.checkbox("Show data", key="TFrank")
@@ -219,3 +233,4 @@ def TF_page(path_data):
 
         if cb:
             st.dataframe(df_data.style.format(precision=0), use_container_width=True)
+

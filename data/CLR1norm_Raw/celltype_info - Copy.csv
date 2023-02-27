@@ -1,0 +1,25 @@
+"","Row.names","sample names","number of genes","number of proteins","final D size","RNArate","minimal.cells"
+"1","BMCP","ND251_34","0","0","0, 0",0.5,50
+"2","CD14-Mono","NA","NA","NA","NA",0.4,50
+"3","CLP","NA","NA","NA","NA",0.4,50
+"4","ERP","ND251_34","0","0","0, 0",0.55,50
+"5","HSC CACNB2","ND251_34, ND251_HSC, ND251_LMPP","0","0","0, 0",0.55,50
+"6","HSC HIST1H2AC","ND251_34, ND251_HSC","0","0","0, 0",0.4,50
+"7","HSC MYADM-CD97","ND251_34, ND251_HSC, ND251_LMPP","0","0","0, 0",0.4,50
+"8","HSC WNT11","ND251_34, ND251_HSC, ND251_LMPP","0","0","0, 0",0.4,50
+"9","LMPP CDK6-FLT3","ND251_34, ND251_HSC, ND251_LMPP","0","0","0, 0",0.4,50
+"10","LMPP LSAMP","ND251_34, ND251_LMPP","0","0","0, 0",0.4,50
+"11","LMPP Naive T-cell","ND251_LMPP","0","0","0, 0",0.35,50
+"12","LMPP PRSS1","ND251_34, ND251_LMPP","0","0","0, 0",0.4,50
+"13","LT-HSC HLF","ND251_34, ND251_HSC","0","0","0, 0",0.5,50
+"14","MDP-2 GPR133","NA","NA","NA","NA",0.4,50
+"15","MDP-pDC","NA","NA","NA","NA",0.4,50
+"16","MEP-MKP","ND251_34","0","0","0, 0",0.4,50
+"17","ML-Gran","ND251_34, ND251_HSC, ND251_LMPP","0","0","0, 0",0.4,50
+"18","MPP Ribo-high","ND251_34, ND251_HSC, ND251_LMPP","0","0","0, 0",0.4,50
+"19","MPP SPINK2-CD99","ND251_34, ND251_HSC","0","0","0, 0",0.4,50
+"20","MultiLin-ATAC","ND251_34, ND251_LMPP","0","0","0, 0",0.4,50
+"21","pre-Gran CP","ND251_34","0","0","0, 0",0.5,50
+"22","pre-MEP","ND251_34, ND251_HSC","0","0","0, 0",0.4,50
+"23","pre-PC","NA","NA","NA","NA",0.4,50
+"24","ST-HSC PBX1","ND251_34, ND251_HSC","0","0","0, 0",0.4,50

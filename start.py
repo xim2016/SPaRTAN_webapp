@@ -8,16 +8,16 @@ from main_page import main_page
 # Image.MAX_IMAGE_PIXELS = None
 
 # from utils import set_page_container_style
-def set_page_container_style(prcnt_width: int = 75):
-    max_width_str = f"max-width: {prcnt_width}%;"
-    st.markdown(f"""
-                <style> 
-                
-                .appview-container .main .block-container{{{max_width_str}}}
-                </style>    
-                """,
-                unsafe_allow_html=True,
-                )
+# def set_page_container_style(prcnt_width: int = 75):
+max_width_str = f"max-width: 75%;"
+st.markdown(f"""
+            <style> 
+            
+            .appview-container .main .block-container{{{max_width_str}}}
+            </style>    
+            """,
+            unsafe_allow_html=True,
+            )
 
 
 page_style = """
@@ -34,12 +34,13 @@ page_style = """
 
 
 
-set_page_container_style(75)
+# set_page_container_style(75)
 
 
 with st.sidebar:
-    choose1 = option_menu("Testing set", ["CLR1norm","CLR2norm"],
+    choose1 = option_menu("Testing set", ["CLR1norm_Denoised","CLR1norm_Raw",  "CLR2norm_Raw"],
                          icons=['clipboard-data',
+                                'clipboard-data',
                                 'lightning-charge'],
                          menu_icon="app-indicator", default_index=0,
                          styles={
