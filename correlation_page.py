@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 from pathlib import Path
 from utils import img2buf, violin_plot, convert_df_to_csv, load_data
-from register_load_widget_state import  persist, update_widget_state
+from register_load_widget_state import  persist
 
 # def set_page_container_style(prcnt_width: int = 75):
 #     max_width_str = f"max-width: {prcnt_width}%;"
@@ -81,7 +81,7 @@ def correlation_page(path_data,last_select=""):
     #             on_change = number_callback
     #         )
     # try:
-    if "register_load_widget_state_PERSIST" in st.session_state:
+    if "corrpage_protein" in st.session_state:
         if not st.session_state.corrpage_protein in proteins:
             st.session_state.corrpage_protein = proteins[0]
 

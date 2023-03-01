@@ -95,7 +95,7 @@ def TF_page(path_data):
         # violin plot for selected TFs]]    
         # defaults = st.session_state['1_tf'] if "1_tf" in st.session_state and set(st.session_state['1_tf']).issubset(set(tfall)) and len(set(st.session_state['1_tf']))>0 else [tfall[0]]
     
-        if "register_load_widget_state_PERSIST" in st.session_state:
+        if "tfpage_tab1_tf" in st.session_state:
             if not set(st.session_state.tfpage_tab1_tf).issubset(set(tfall)): 
                  st.session_state.tfpage_tab1_tf = list(set(st.session_state.tfpage_tab1_tf) & set(tfall))
 
@@ -177,7 +177,7 @@ def TF_page(path_data):
     elif selected == "Analysis by TF & cell-type":
         c3_1, c3_2 = st.columns(2)
 
-        if "register_load_widget_state_PERSIST" in st.session_state:
+        if "tfpage_tab3_tf" in st.session_state:
             if not set(st.session_state.tfpage_tab3_tf).issubset(set(tfall)): 
                  st.session_state.tfpage_tab3_tf = list(set(st.session_state.tfpage_tab3_tf) & set(tfall))
 
