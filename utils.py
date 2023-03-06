@@ -73,3 +73,15 @@ def show_dataframe_index():
 
     # Inject CSS with Markdown
     st.markdown(show_dataframe_row_index, unsafe_allow_html=True)
+
+
+def set_page_container_style(prcnt_width: int = 75):
+    max_width_str = f"max-width: {prcnt_width}%;"
+    st.markdown(f"""
+                <style> 
+                
+                .appview-container .main .block-container{{{max_width_str}}}
+                </style>    
+                """,
+                unsafe_allow_html=True,
+                )

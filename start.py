@@ -40,9 +40,8 @@ page_style = """
 
 
 with st.sidebar:
-    choose1 = option_menu("Testing set", ["CLR1norm_Denoised","CLR1norm_Raw",  "CLR2norm_Raw"],
+    choose1 = option_menu("Normalization", ["CLR1norm",  "CLR2norm"],
                          icons=['clipboard-data',
-                                'clipboard-data',
                                 'lightning-charge'],
                          menu_icon="app-indicator", default_index=0,
                          styles={
