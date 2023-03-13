@@ -4,19 +4,7 @@ from pathlib import Path
 from utils import img2buf, violin_plot, convert_df_to_csv, load_data
 from register_load_widget_state import  persist
 
-# def set_page_container_style(prcnt_width: int = 75):
-#     max_width_str = f"max-width: {prcnt_width}%;"
-#     st.markdown(f"""
-#                 <style> 
-                
-#                 .appview-container .main .block-container{{{max_width_str}}}
-#                 </style>    
-#                 """,
-#                 unsafe_allow_html=True,
-#                 )
 
-
-# set_page_container_style(75)
 
 def correlation_page(path_data,last_select=""):
 

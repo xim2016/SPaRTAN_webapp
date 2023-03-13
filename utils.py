@@ -39,7 +39,7 @@ def violin_plot(title, data_group, x, y, width, height, pvalue=pd.NA):
     fig, ax = plt.subplots(figsize=(width, height))
 
     if x=="Celltype":
-        sns.violinplot(x=x, y=y, data=data_group, ax=ax, order=[ "BMCP","CD14-Mono","CLP","ERP","HSC CACNB2","HSC HIST1H2AC","HSC MYADM-CD97","HSC WNT11","LMPP CDK6-FLT3","LMPP LSAMP","LMPP Naive T-cell","LMPP PRSS1","LT-HSC HLF","MDP-2 GPR133","MDP-pDC","MEP-MKP","ML-Gran","MPP Ribo-high","MPP SPINK2-CD99","MultiLin-ATAC","pre-Gran CP","pre-MEP","pre-PC","ST-HSC PBX1"])
+        sns.violinplot(x=x, y=y, data=data_group, ax=ax, order=[ "LT-HSC.HLF","HSC.HIST1H2AC","HSC.WNT11","HSC.CACNB2","HSC.MYADM-CD97","ST-HSC.PBX1","LMPP.CDK6-FLT3","MPP.SPINK2-CD99","MPP.Ribo-high","pre-MEP","MEP-MKP","ERP","BMCP","ML-Gran","MultiLin-ATAC","pre-Gran.CP","MDP-pDC","MDP-2.GPR133","CD14-Mono","LMPP.PRSSI","LMPP.LSAMP","CLP","pre-PC","LMPP.Naive.T-cell"])
     else:
         sns.violinplot(x=x, y=y, data=data_group, ax=ax)
 

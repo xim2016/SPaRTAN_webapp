@@ -9,22 +9,10 @@ from utils import convert_df_to_csv, img2buf, load_data, violin_plot
 from register_load_widget_state import  persist
 
 
-# def set_page_container_style(prcnt_width: int = 75):
-#     max_width_str = f"max-width: {prcnt_width}%;"
-#     st.markdown(f"""
-#                 <style> 
-                
-#                 .appview-container .main .block-container{{{max_width_str}}}
-#                 </style>    
-#                 """,
-#                 unsafe_allow_html=True,
-#                 )
-
 
 my_theme = {'txc_inactive': 'black', 'menu_background': 'white',
             'txc_active': 'white', 'option_active': 'blue'}
 
-# set_page_container_style(75)
 
 def TF_page(path_data):
 
@@ -105,7 +93,7 @@ def TF_page(path_data):
             patients = sorted(set(df_ranks["Donor"]))
             for p in patients:
                 df_ranks_p = df_ranks.loc[df_ranks['Donor']==p,]
-                fig = violin_plot(tf + " of " + p, df_ranks_p, "Celltype",tf, 25, 3)
+                fig = violin_plot(tf + " of " + p, df_ranks_p, "Celltype",tf, 25, 4)
                 st.pyplot(fig)
 
 
@@ -137,7 +125,7 @@ def TF_page(path_data):
 
         st.info('For each cell type, check the similarity and difference among samples of each TF rank. Cell types that have only one sample are not included in the dropdown list')
 
-        s_celltype = st.selectbox(f'Cell type ({len(celltypeAll)})', celltypeAll,  key=persist("tfpage_tab2_type"),   
+        s_celltype = st.selectbox(f'Cell types ({len(celltypeAll)})', celltypeAll,  key=persist("tfpage_tab2_type"),   
                                   format_func=lambda x: x + " (Num of donors: " + str(len(type2ds[x])) + ")")
 
        

@@ -6,29 +6,6 @@ from utils import hide_table_index, hide_dataframe_index
 import os
 from PIL import Image
 
-
-
-
-# def show_pdf(file_path):
-#     with open(file_path,"rb") as f:
-#         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-#     pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="950" height="800" type="application/pdf"></iframe>'
-#     st.markdown(pdf_display, unsafe_allow_html=True)
-
-
-page_style = """
-        <style>
-        #MainMenu {visibility: hidden;}  
-        footer  {visibility: hidden;}  
-        div.css-1vq4p4l.e1fqkh3o4{padding: 2rem 1rem 1.5rem;}
-        div.block-container{padding-top:3rem;}
-        </style>
-        """
-
-
-# set_page_container_style(75)
-
-
 path = "./data"
 protein_names = pd.read_csv(Path(path)/"protein_names.csv", index_col=0).T
 celltype_names = pd.read_csv(Path(path)/"celltype_names.csv", index_col=0).T
