@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-from utils import convert_df_to_csv, img2buf, load_data, violin_plot
+from utils import convert_df_to_csv, img2buf, load_data, violin_plot, anova_test
 from register_load_widget_state import  persist
 
 
@@ -64,14 +64,14 @@ def TF_page(path_data):
 
    
     # start menu options
-    selected = option_menu(None, ["Analysis by TF", "Analysis by cell-type", "Analysis by TF & cell-type"],
+    selected = option_menu(None, ["Analysis by TFs (across all cell-types)", "Analysis by TFs (cell-type specific view)", "Analysis by cell-type"],
                         #    icons=["bi bi-grid-3x3", "bi bi-align-end",
                         #           "bi bi-align-bottom"],
                            menu_icon="cast", default_index=0, orientation="horizontal",
                            styles={
         "container": {"padding": "20!important", "background-color": "#eee"},
-        "icon": {"color": "orange", "font-size": "22px"},
-        "nav-link": {"font-size": "18px", "text-align": "center", "margin": "0px", "--hover-color": "#fafafa"},
+        "icon": {"color": "orange", "font-size": "18px"},
+        "nav-link": {"font-size": "16px", "text-align": "center", "margin": "0px", "--hover-color": "#fafafa"},
         "nav-link-selected": {"background-color": "#FD5816"},
         "separator": "A"
     })
@@ -90,7 +90,7 @@ def TF_page(path_data):
     #     datafile = str(path_data / "TFrank/mean/TFrank_celltypeMean.csv")
     #     datafile_out = "TFrank_celltypeMean.csv"
 
-    if selected == 'Analysis by TF':
+    if selected == 'Analysis by TFs (across all cell-types)':
         st.info('For each TF, violin plot shows its ranks across cell types. You can select multiple TFs of your interest from TFs list for comparison.')
         # violin plot for selected TFs]]    
         # defaults = st.session_state['1_tf'] if "1_tf" in st.session_state and set(st.session_state['1_tf']).issubset(set(tfall)) and len(set(st.session_state['1_tf']))>0 else [tfall[0]]
@@ -99,12 +99,15 @@ def TF_page(path_data):
             if not set(st.session_state.tfpage_tab1_tf).issubset(set(tfall)): 
                  st.session_state.tfpage_tab1_tf = list(set(st.session_state.tfpage_tab1_tf) & set(tfall))
 
-        TFs_selected = st.multiselect('TFs', tfall,  key=persist("tfpage_tab1_tf"))
-
+        TFs_selected = st.multiselect('TFs', tfall,  default=tfall[0], key=persist("tfpage_tab1_tf"))
         for tf in TFs_selected:
-            df_ranks = df_ranks_all.loc[:, [tf, "Celltype"]]
-            fig = violin_plot(tf, df_ranks, "Celltype",tf, 25, 5)
-            st.pyplot(fig)
+            df_ranks = df_ranks_all.loc[:, [tf, "Celltype","Donor"]]
+            patients = sorted(set(df_ranks["Donor"]))
+            for p in patients:
+                df_ranks_p = df_ranks.loc[df_ranks['Donor']==p,]
+                fig = violin_plot(tf + " of " + p, df_ranks_p, "Celltype",tf, 25, 3)
+                st.pyplot(fig)
+
 
         s_TFs = "_".join(TFs_selected)
         s_TFs if len(s_TFs) <= 100 else s_TFs[:100]
@@ -174,7 +177,7 @@ def TF_page(path_data):
         if cb:
             st.dataframe(df_data.style.format(precision=0), use_container_width=True)
 
-    elif selected == "Analysis by TF & cell-type":
+    elif selected == "Analysis by TFs (cell-type specific view)":
         c3_1, c3_2 = st.columns(2)
 
         if "tfpage_tab3_tf" in st.session_state:
@@ -182,17 +185,17 @@ def TF_page(path_data):
                  st.session_state.tfpage_tab3_tf = list(set(st.session_state.tfpage_tab3_tf) & set(tfall))
 
 
-        tf3_selected = st.multiselect('TFs', tfall,  key=persist("tfpage_tab3_tf"))
+        tf3_selected = st.multiselect('TFs', tfall, default=tfall[0],  key=persist("tfpage_tab3_tf"))
 
-        type3_selected = st.multiselect(f'Cell types', celltypeAll,  key=persist("tfpage_tab3_type"),
+        type3_selected = st.multiselect(f'Cell types', celltypeAll, default=celltypeAll[0], key=persist("tfpage_tab3_type"),
                                  format_func=lambda x: x + " (Num of donors: " + str(len(type2ds[x])) + ")")
 
 
         for tf in tf3_selected:
             for type in type3_selected:
                 df_ranks_2 = df_ranks_all.loc[df_ranks_all['Celltype']==type, [tf, "Donor"]]
-
-                fig = violin_plot(f"{tf} in {type}", df_ranks_2, "Donor", tf, 25,5)
+                pvalue = anova_test(df_ranks_2, tf)
+                fig = violin_plot(f"{tf} in {type}", df_ranks_2, "Donor", tf, 25,4, pvalue)
                 st.pyplot(fig)
 
         s3_TFs = "_".join(tf3_selected)

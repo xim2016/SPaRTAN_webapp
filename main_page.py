@@ -39,8 +39,8 @@ page_style = """
 
 set_page_container_style(75)
 
-mainTitle2idx = {"Data Info": 0,
-                 "TF Analyses": 1,
+mainTitle2idx = {"Data overview": 0,
+                 "TF activity analysis": 1,
                  "Protein-TF Correlation": 2
                  }
 
@@ -49,8 +49,8 @@ mainTitle2idx = {"Data Info": 0,
 def main_page(orisetting, cleanedsetting):
 
     pages = {
-        "Data Info": data_page,
-        "TF Analyses": TF_page,
+        "Data overview": data_page,
+        "TF activity analysis": TF_page,
         "Protein-TF Correlation":correlation_page
     }
 
@@ -59,7 +59,7 @@ def main_page(orisetting, cleanedsetting):
     with st.sidebar:
         default_value = st.session_state["main"] if "main" in st.session_state else 0
         # print( "main" in st.session_state)
-        choose2 = option_menu(orisetting, ["Data Info", "TF Analyses", "Protein-TF Correlation"],
+        choose2 = option_menu(orisetting, ["Data overview", "TF activity analysis", "Protein-TF Correlation"],
                             icons=['clipboard-data',
                                     'lightning-charge', 'bar-chart-line'],
                             menu_icon="arrow-return-right", default_index=default_value,

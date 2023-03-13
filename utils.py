@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
 import seaborn as sns
-
+import scipy.stats as stats
+from statsmodels.formula.api import ols
+import statsmodels.api as sm
 
 def img2buf(img_path: str):
     img = Image.open(img_path)
@@ -25,11 +27,26 @@ def convert_df_to_csv(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
     return df.to_csv().encode('utf-8')
 
-def violin_plot(title, data_group, x, y, width, height):
+def anova_test(df, tf):
+    if len(set(df['Donor']))== 1: return(pd.NA)
+    model = ols(f'{tf} ~ C(Donor)', data=df).fit()
+    anova_table = sm.stats.anova_lm(model, typ=2)
+    pvalue = anova_table.iloc[0,3]
+    return(pvalue)    
+
+
+def violin_plot(title, data_group, x, y, width, height, pvalue=pd.NA):
     fig, ax = plt.subplots(figsize=(width, height))
 
-    sns.violinplot(x=x, y=y, data=data_group, ax=ax)
-    ax.set_title("{} ".format(title),  fontsize=26)
+    if x=="Celltype":
+        sns.violinplot(x=x, y=y, data=data_group, ax=ax, order=[ "BMCP","CD14-Mono","CLP","ERP","HSC CACNB2","HSC HIST1H2AC","HSC MYADM-CD97","HSC WNT11","LMPP CDK6-FLT3","LMPP LSAMP","LMPP Naive T-cell","LMPP PRSS1","LT-HSC HLF","MDP-2 GPR133","MDP-pDC","MEP-MKP","ML-Gran","MPP Ribo-high","MPP SPINK2-CD99","MultiLin-ATAC","pre-Gran CP","pre-MEP","pre-PC","ST-HSC PBX1"])
+    else:
+        sns.violinplot(x=x, y=y, data=data_group, ax=ax)
+
+    if pd.isnull(pvalue):
+        ax.set_title("{} ".format(title),  fontsize=26)
+    else:
+        ax.set_title("{} pvalue = {:.2f}".format(title, pvalue),  fontsize=26)
     ax.set_ylabel("TF rank", fontsize=20)
     ax.set_xlabel("")
     plt.xticks(rotation=45, fontsize=16)
