@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
 import seaborn as sns
-import scipy.stats as stats
-from statsmodels.formula.api import ols
-import statsmodels.api as sm
+# import scipy.stats as stats
+# from statsmodels.formula.api import ols
+# import statsmodels.api as sm
 
 def img2buf(img_path: str):
     img = Image.open(img_path)
@@ -27,12 +27,12 @@ def convert_df_to_csv(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
     return df.to_csv().encode('utf-8')
 
-def anova_test(df, tf):
-    if len(set(df['Donor']))== 1: return(pd.NA)
-    model = ols(f'{tf} ~ C(Donor)', data=df).fit()
-    anova_table = sm.stats.anova_lm(model, typ=2)
-    pvalue = anova_table.iloc[0,3]
-    return(pvalue)    
+# def anova_test(df, tf):
+#     if len(set(df['Donor']))== 1: return(pd.NA)
+#     model = ols(f'{tf} ~ C(Donor)', data=df).fit()
+#     anova_table = sm.stats.anova_lm(model, typ=2)
+#     pvalue = anova_table.iloc[0,3]
+#     return(pvalue)    
 
 
 def violin_plot(title, data_group, x, y, width, height, pvalue=pd.NA):

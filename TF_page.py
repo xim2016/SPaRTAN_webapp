@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-from utils import convert_df_to_csv, img2buf, load_data, violin_plot, anova_test
+from utils import convert_df_to_csv, img2buf, load_data, violin_plot
 from register_load_widget_state import  persist
 
 
@@ -194,8 +194,8 @@ def TF_page(path_data):
         for tf in tf3_selected:
             for type in type3_selected:
                 df_ranks_2 = df_ranks_all.loc[df_ranks_all['Celltype']==type, [tf, "Donor"]]
-                pvalue = anova_test(df_ranks_2, tf)
-                fig = violin_plot(f"{tf} in {type}", df_ranks_2, "Donor", tf, 25,4, pvalue)
+                # pvalue = anova_test(df_ranks_2, tf)
+                fig = violin_plot(f"{tf} in {type}", df_ranks_2, "Donor", tf, 25,4)
                 st.pyplot(fig)
 
         s3_TFs = "_".join(tf3_selected)
