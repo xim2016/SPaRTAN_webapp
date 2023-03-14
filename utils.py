@@ -41,7 +41,7 @@ def violin_plot(title, data_group, x, y, width, height, pvalue=pd.NA):
     if x=="Celltype":
         sns.violinplot(x=x, y=y, data=data_group, ax=ax, order=[ "LT-HSC.HLF","HSC.HIST1H2AC","HSC.WNT11","HSC.CACNB2","HSC.MYADM-CD97","ST-HSC.PBX1","LMPP.CDK6-FLT3","MPP.SPINK2-CD99","MPP.Ribo-high","pre-MEP","MEP-MKP","ERP","BMCP","ML-Gran","MultiLin-ATAC","pre-Gran.CP","MDP-pDC","MDP-2.GPR133","CD14-Mono","LMPP.PRSSI","LMPP.LSAMP","CLP","pre-PC","LMPP.Naive.T-cell"])
     else:
-        sns.violinplot(x=x, y=y, data=data_group, ax=ax)
+        sns.violinplot(x=x, y=y, data=data_group, ax=ax, order=["ND251_34","ND251_HS","ND251_LMPP","ND251_MPP"])
 
     if pd.isnull(pvalue):
         ax.set_title("{} ".format(title),  fontsize=26)
